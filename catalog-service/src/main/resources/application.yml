@@ -1,0 +1,52 @@
+<<<<<<< HEAD
+﻿server:
+  port: 8081
+spring:
+  application:
+    name: catalog-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_ADDR:nacos:8848}
+        namespace: ${NACOS_NAMESPACE:dev}
+        group: ${NACOS_GROUP:COURSEHUB_GROUP}
+        ephemeral: true
+        heart-beat-interval: 5000
+        heart-beat-timeout: 15000
+  datasource:
+    url: jdbc:mysql://localhost:3306/catalog_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: catalog_user
+    password: catalog_pass
+=======
+spring:
+  application:
+    name: catalog-service
+  datasource:
+    url: jdbc:mysql://catalog-db:3306/catalog_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: catalog_user
+    password: catalog_pass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+<<<<<<< HEAD
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+=======
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+server:
+  port: 8082
+
+logging:
+  level:
+    com.zjgsu: DEBUG
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc

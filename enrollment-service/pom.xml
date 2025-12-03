@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<<<<<<< HEAD
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zjsu.gjh.coursecloud</groupId>
+    <artifactId>enrollment-service</artifactId>
+    <version>1.0.0</version>
+    <name>enrollment-service</name>
+    <description>Enrollment microservice</description>
+    <packaging>jar</packaging>
+
+    <!-- 方案A：Spring Boot 3.2.0（与所有依赖完全兼容） -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.0</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+
+    <!-- 方案A：Spring Cloud 2023.0.3（Lisbon，对应 Boot 3.2.x） -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2023.0.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Web -->
+=======
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.7</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.zjgsu.gjh</groupId>
+    <artifactId>enrollment-service</artifactId>
+    <version>1.0.0</version>
+    <name>Enrollment Service</name>
+    <description>Enrollment management service</description>
+
+    <properties>
+        <java.version>25</java.version>
+    </properties>
+
+    <dependencies>
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+<<<<<<< HEAD
+        <!-- JPA，如果 enrollment 使用数据库则保留 -->
+=======
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+<<<<<<< HEAD
+        <!-- Validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- Actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- Nacos Discovery（Alibaba） -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>2023.0.1.0</version>
+        </dependency>
+
+        <!-- LoadBalancer（版本由 Spring Cloud BOM 管理，不需要写 version） -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+        <!-- MySQL -->
+=======
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+<<<<<<< HEAD
+        <!-- Lombok -->
+=======
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+<<<<<<< HEAD
+        <!-- Test -->
+=======
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+<<<<<<< HEAD
+=======
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc

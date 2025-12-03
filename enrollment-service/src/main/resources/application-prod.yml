@@ -1,0 +1,52 @@
+﻿spring:
+  application:
+    name: enrollment-service
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_ADDR:nacos:8848}
+        namespace: ${NACOS_NAMESPACE:dev}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        ephemeral: true
+        heart-beat-interval: 5000
+        heart-beat-timeout: 15000
+
+    loadbalancer:
+      enabled: true
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+# 下游服务名称（供 RestTemplate/WebClient 使用）
+catalog:
+  service:
+    name: catalog-service
+
+user:
+  service:
+    name: user-service
+
+server:
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # 必须暴露所有 actuator 才能正确被 Nacos 管理
+
+  health:
+    diskspace:
+      enabled: true
+      threshold: 10MB
+NACOS_NAMESPACE: public
+NACOS_GROUP: DEFAULT_GROUP
+

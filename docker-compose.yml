@@ -1,0 +1,297 @@
+<<<<<<< HEAD
+version: "3.8"
+
+networks:
+  course-cloud-network:
+    driver: bridge
+
+volumes:
+  catalog-data:
+  enrollment-data:
+  user-data:
+
+services:
+  nacos:
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/nacos/nacos-server:v2.3.2
+    container_name: nacos
+    environment:
+      - MODE=standalone
+      - JVM_XMS=256m
+      - JVM_XMX=256m
+      - JVM_XMN=128m
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    networks:
+      - course-cloud-network
+
+=======
+networks:
+  course-network:
+    driver: bridge
+
+services:
+  # 用户数据库
+  user-db:
+    image: mysql:8.4
+    container_name: user-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: user_db
+      MYSQL_USER: user_user
+      MYSQL_PASSWORD: user_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - user-data:/var/lib/mysql
+    networks:
+      - course-network
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 课程目录数据库
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+  catalog-db:
+    image: mysql:8.4
+    container_name: catalog-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: catalog_db
+      MYSQL_USER: catalog_user
+      MYSQL_PASSWORD: catalog_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - catalog-data:/var/lib/mysql
+<<<<<<< HEAD
+=======
+    networks:
+      - course-network
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+<<<<<<< HEAD
+    networks:
+      - course-cloud-network
+
+=======
+
+  # 选课数据库
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+  enrollment-db:
+    image: mysql:8.4
+    container_name: enrollment-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: enrollment_db
+      MYSQL_USER: enrollment_user
+      MYSQL_PASSWORD: enrollment_pass
+    ports:
+      - "3308:3306"
+    volumes:
+      - enrollment-data:/var/lib/mysql
+<<<<<<< HEAD
+=======
+    networks:
+      - course-network
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+<<<<<<< HEAD
+    networks:
+      - course-cloud-network
+
+  user-db:
+    image: mysql:8.4
+    container_name: user-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: user_db
+      MYSQL_USER: user_user
+      MYSQL_PASSWORD: user_pass
+    ports:
+      - "3309:3306"
+    volumes:
+      - user-data:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - course-cloud-network
+
+  catalog-service:
+    build:
+      context: ./catalog-service
+      dockerfile: Dockerfile
+    container_name: catalog-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:mysql://catalog-db:3306/catalog_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DB_USERNAME: catalog_user
+      DB_PASSWORD: catalog_pass
+      NACOS_ADDR: nacos:8848
+      NACOS_NAMESPACE: public
+      NACOS_GROUP: DEFAULT_GROUP
+    ports:
+      - "8081:8081"
+    depends_on:
+      catalog-db:
+        condition: service_healthy
+      nacos:
+        condition: service_started
+    networks:
+      - course-cloud-network
+    restart: unless-stopped
+
+=======
+
+  # 用户服务
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+<<<<<<< HEAD
+    container_name: user-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:mysql://user-db:3306/user_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DB_USERNAME: user_user
+      DB_PASSWORD: user_pass
+      NACOS_ADDR: nacos:8848
+      NACOS_NAMESPACE: public
+      NACOS_GROUP: DEFAULT_GROUP
+    ports:
+      - "8083:8083"
+    depends_on:
+      user-db:
+        condition: service_healthy
+      nacos:
+        condition: service_started
+    networks:
+      - course-cloud-network
+    restart: unless-stopped
+
+=======
+    image: course-cloud-user-service:1.0.0
+    container_name: user-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://user-db:3306/user_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: user_user
+      SPRING_DATASOURCE_PASSWORD: user_pass
+      SPRING_CLOUD_NACOS_CONFIG_ENABLED: false
+      SPRING_CLOUD_NACOS_DISCOVERY_ENABLED: false
+    ports:
+      - "8081:8081"
+    depends_on:
+      user-db:
+        condition: service_healthy
+    networks:
+      - course-network
+    restart: unless-stopped
+
+  # 课程目录服务
+  catalog-service:
+    build:
+      context: ./catalog-service
+      dockerfile: Dockerfile
+    image: course-cloud-catalog-service:1.0.0
+    container_name: catalog-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://catalog-db:3306/catalog_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: catalog_user
+      SPRING_DATASOURCE_PASSWORD: catalog_pass
+      SPRING_CLOUD_NACOS_CONFIG_ENABLED: false
+      SPRING_CLOUD_NACOS_DISCOVERY_ENABLED: false
+    ports:
+      - "8082:8082"
+    depends_on:
+      catalog-db:
+        condition: service_healthy
+    networks:
+      - course-network
+    restart: unless-stopped
+
+  # 选课服务
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc
+  enrollment-service:
+    build:
+      context: ./enrollment-service
+      dockerfile: Dockerfile
+<<<<<<< HEAD
+    container_name: enrollment-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:mysql://enrollment-db:3306/enrollment_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      DB_USERNAME: enrollment_user
+      DB_PASSWORD: enrollment_pass
+      NACOS_ADDR: nacos:8848
+      NACOS_NAMESPACE: public
+      NACOS_GROUP: DEFAULT_GROUP
+    ports:
+      - "8082:8082"
+    depends_on:
+      enrollment-db:
+        condition: service_healthy
+      catalog-service:
+        condition: service_started
+      user-service:
+        condition: service_started
+      nacos:
+        condition: service_started
+    networks:
+      - course-cloud-network
+    restart: unless-stopped
+
+=======
+    image: course-cloud-enrollment-service:1.0.0
+    container_name: enrollment-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://enrollment-db:3306/enrollment_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: enrollment_user
+      SPRING_DATASOURCE_PASSWORD: enrollment_pass
+      SERVICES_USER-SERVICE_URL: http://user-service:8081
+      SERVICES_CATALOG-SERVICE_URL: http://catalog-service:8082
+      SPRING_CLOUD_NACOS_CONFIG_ENABLED: false
+      SPRING_CLOUD_NACOS_DISCOVERY_ENABLED: false
+    ports:
+      - "8083:8083"
+    depends_on:
+      enrollment-db:
+        condition: service_healthy
+      user-service:
+        condition: service_started
+      catalog-service:
+        condition: service_started
+    networks:
+      - course-network
+    restart: unless-stopped
+
+volumes:
+  user-data:
+  catalog-data:
+  enrollment-data:
+>>>>>>> 668c9acc40df4baace1d588ee8a747e9f8a21abc

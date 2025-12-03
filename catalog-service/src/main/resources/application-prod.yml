@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: catalog-service
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_ADDR:nacos:8848}
+        namespace: ${NACOS_NAMESPACE:public}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        ephemeral: true
+        heart-beat-interval: 5000
+        heart-beat-timeout: 15000
+
+    loadbalancer:
+      enabled: true
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8081
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  health:
+    diskspace:
+      enabled: true
+      threshold: 10MB
+
