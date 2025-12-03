@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿# course-cloud (微服务版校园选课系统)
 
 **项目名称**: course-cloud  
