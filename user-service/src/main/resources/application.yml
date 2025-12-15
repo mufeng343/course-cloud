@@ -1,0 +1,60 @@
+server:
+#   port: 8081
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  application:
+    name: user-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos:8848
+        username: nacos  # 默认用户名
+        password: nacos  # 默认密码
+        namespace: public
+        group: DEFAULT_GROUP
+        cluster-name: DEFAULT
+  datasource:
+    url: jdbc:mysql://user-db:3306/user_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+    username: user_user
+    password: user_pass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        connection:
+          characterEncoding: UTF-8
+        hbm2ddl:
+          charset_name: UTF-8
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# JWT配置
+jwt:
+  secret: "course-cloud-jwt-secret-key-512-bits-long-for-security-2025-this-is-a-very-long-secret-key-that-meets-hs512-requirements"
+  expiration: 86400000 # 24小时，单位毫秒
+
+logging:
+  level:
+    com.zjgsu.rqq.user_service: DEBUG
